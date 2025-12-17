@@ -1,3 +1,5 @@
+'use client'
+
 import EmployeeForm from '@/components/employees/EmployeeForm'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'

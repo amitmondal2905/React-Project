@@ -1,3 +1,5 @@
+'use client'
+
 import Contact from "./contact/contact";
 import Footer from "./footer/footer";
 import Hero from "./heroSection/hero";

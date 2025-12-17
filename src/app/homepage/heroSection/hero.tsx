@@ -1,3 +1,5 @@
+"use client"
+
 import Link from 'next/link'
 import { ArrowRight, Code, Palette, TrendingUp } from 'lucide-react'
 
