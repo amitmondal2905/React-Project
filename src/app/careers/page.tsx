@@ -46,7 +46,7 @@ export default function CareersPage() {
 
                 <div className="grid gap-6 lg:grid-cols-2">
                     {jobs?.map((job) => {
-                        const isActive = job.status === 'Active';
+                        const isActive = job.status === 'Open';
                         return (
                             <div key={job.id} className={`bg-[#1e1e24] rounded-xl border ${isActive ? 'border-gray-800' : 'border-gray-800 opacity-75'} p-6 transition-all duration-300 hover:border-indigo-500/50 hover:shadow-lg hover:shadow-indigo-500/10 group`}>
                                 <div className="flex justify-between items-start mb-6">
@@ -60,8 +60,8 @@ export default function CareersPage() {
                                         </div>
                                     </div>
                                     <span className={`px-3 py-1 rounded-full text-xs font-medium border ${isActive
-                                            ? 'bg-green-500/10 text-green-400 border-green-500/20'
-                                            : 'bg-gray-700/50 text-gray-400 border-gray-600'
+                                        ? 'bg-green-500/10 text-green-400 border-green-500/20'
+                                        : 'bg-gray-700/50 text-gray-400 border-gray-600'
                                         }`}>
                                         {job.status}
                                     </span>
