@@ -4,8 +4,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabaseClient'
 import { Application } from '@/types/recruitment'
 import { Loader2, FileText, Mail, Phone, Github, MessageSquare, Video } from 'lucide-react'
-import { sendRejectionEmail } from '@/app/actions/sendEmail'
+import { sendRejectionEmail, sendHiredEmail } from '@/app/actions/sendEmail'
 import { toast } from 'react-hot-toast'
+
 
 export default function ApplicationsPage() {
     const queryClient = useQueryClient()
@@ -31,20 +32,33 @@ export default function ApplicationsPage() {
                 .eq('id', id)
 
             if (error) throw error
-            
+
             if (status === 'Rejected' && appParam) {
                 const result = await sendRejectionEmail({
                     to: appParam.email,
                     candidateName: appParam.candidate_name,
                     jobTitle: appParam.job_openings?.title || 'the position'
                 });
-                
+
                 if (result.success) {
                     toast.success('Rejection email sent sequentially directly to candidate!');
                 } else {
                     toast.error('Failed to send email: ' + result.error);
                 }
+            } else if (status === 'Hired' && appParam) {
+                const result = await sendHiredEmail({
+                    to: appParam.email,
+                    candidateName: appParam.candidate_name,
+                    jobTitle: appParam.job_openings?.title || 'the position'
+                });
+
+                if (result.success) {
+                    toast.success('Hiring orientation email sent to candidate!');
+                } else {
+                    toast.error('Failed to send hired email: ' + result.error);
+                }
             }
+
         },
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['applications'] })
@@ -111,9 +125,9 @@ export default function ApplicationsPage() {
                                     <select
                                         className={`pl-3 pr-8 py-1.5 inline-flex text-xs leading-5 font-semibold rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer border-0 shadow-sm transition-colors
                                             ${app.status === 'Hired' ? 'bg-green-100 text-green-800 hover:bg-green-200' :
-                                            app.status === 'Rejected' ? 'bg-red-100 text-red-800 hover:bg-red-200' :
-                                                app.status === 'Interviewing' ? 'bg-blue-100 text-blue-800 hover:bg-blue-200' :
-                                                    'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
+                                                app.status === 'Rejected' ? 'bg-red-100 text-red-800 hover:bg-red-200' :
+                                                    app.status === 'Interviewing' ? 'bg-blue-100 text-blue-800 hover:bg-blue-200' :
+                                                        'bg-gray-100 text-gray-800 hover:bg-gray-200'}`}
                                         value={app.status}
                                         onChange={(e) => updateStatusMutation.mutate({ id: app.id, status: e.target.value, appParam: app })}
                                     >
