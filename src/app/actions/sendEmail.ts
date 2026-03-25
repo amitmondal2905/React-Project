@@ -67,8 +67,7 @@ export async function sendHiredEmail({ to, candidateName, jobTitle }: SendEmailP
         });
 
         const subject = `Offer Letter: Welcome to the team as our new ${jobTitle}!`;
-        // IMPORTANT: Change YOUR_WEBSITE_URL below to your actual domain in production (e.g. https://my-hr-app.vercel.app/signup)
-        const signupLink = process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/signup` : `https://react-project-gucsyyafi-amit-mondals-projects-0d224d3d.vercel.app/login`;
+        const signupLink = process.env.NEXT_PUBLIC_SITE_URL ? `${process.env.NEXT_PUBLIC_SITE_URL}/signup` : `https://react-project-gucsyyafi-amit-mondals-projects-0d224d3d.vercel.app/signup`;
 
         const html = `
             <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
